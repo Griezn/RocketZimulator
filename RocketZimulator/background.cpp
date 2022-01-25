@@ -41,9 +41,9 @@ void background::move(std::string direction){
 }
 
 void background::init_background(){
-	this->background_sprite_ = tx_manager_.create_sprite("C:/Users/seppe/source/repos/RocketZimulator/RocketZimulator/bg.png");
-	this->background_sprite_left_ = tx_manager_.create_sprite("C:/Users/seppe/source/repos/RocketZimulator/RocketZimulator/bg.png");
-	this->background_sprite_right_ = tx_manager_.create_sprite("C:/Users/seppe/source/repos/RocketZimulator/RocketZimulator/bg.png");
+	this->background_sprite_ = tx_manager_.create_sprite("bg.png");
+	this->background_sprite_left_ = tx_manager_.create_sprite("bg.png");
+	this->background_sprite_right_ = tx_manager_.create_sprite("bg.png");
 	this->background_width_ = background_sprite_.getTextureRect().width;
 	this->background_height_ = background_sprite_.getTextureRect().height;
 	//background_sprite_.setOrigin(0, background_height_);

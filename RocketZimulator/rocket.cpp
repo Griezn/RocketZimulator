@@ -5,7 +5,7 @@ constexpr auto rad = pi / 180;
 constexpr auto gravity = 9.81;
 
 void rocket::init_rocket(){
-    this->rocket_sprite_ = tx_manager_.create_sprite("C:/Users/seppe/source/repos/RocketZimulator/RocketZimulator/rocekt.png");
+    this->rocket_sprite_ = tx_manager_.create_sprite("rocekt.png");
     this->rocket_width_ = rocket_sprite_.getTextureRect().width;
     this->rocket_height_ = rocket_sprite_.getTextureRect().height;
     this->rocket_sprite_.setOrigin(rocket_width_ / 2, rocket_height_ / 2);
@@ -31,6 +31,7 @@ void rocket::rotate(const float angle){
 void rocket::reset(){
     this->rocket_sprite_.setPosition(512, 648);
     this->rocket_sprite_.setRotation(0);
+    this->rocket_angle = 0;
     this->rocketVelocity_ = start_vel_;
 }
 
