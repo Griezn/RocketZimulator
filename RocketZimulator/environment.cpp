@@ -50,16 +50,15 @@ void environment::poll_event(){
 	TODO:
 		- Bad implementation of acceleration of our rocket, will make it better soon ;-)
 		- Reset velocity when rocket stops moving (release Z)
+		- Move bg wen rocket is to close to border
 */
 
 void environment::handle_input() const{
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z)) {
-		printf("Velocity of the rocket now is %f\n", this->rocket_->returnVelocity());
-		this->rocket_->calculate_velocity();
-		this->rocket_->move(this->rocket_->returnVelocity());
+		this->rocket_->move();
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) {
-		this->rocket_->move(0.2);
+		this->rocket_->move();
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) {
 		this->background_->move("left");
@@ -68,14 +67,13 @@ void environment::handle_input() const{
 		this->background_->move("right");
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Delete)) {
-		this->rocket_->set_position(512, 648);
-		this->rocket_->set_rotation(0);
+		this->rocket_->reset();
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left)) {
-		this->rocket_->rotate(-0.5);
+		this->rocket_->rotate(-0.3);
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right)) {
-		this->rocket_->rotate(0.5);
+		this->rocket_->rotate(0.3);
 	}
 }
 
