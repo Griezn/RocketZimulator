@@ -22,12 +22,14 @@
     <ClCompile Include="background.cpp" />
     <ClCompile Include="environment.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="menu.cpp" />
     <ClCompile Include="rocket.cpp" />
     <ClCompile Include="texture_manager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="background.h" />
     <ClInclude Include="environment.h" />
+    <ClInclude Include="menu.h" />
     <ClInclude Include="rocket.h" />
     <ClInclude Include="texture_manager.h" />
   </ItemGroup>
