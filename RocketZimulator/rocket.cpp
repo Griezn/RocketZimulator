@@ -5,16 +5,17 @@ constexpr auto rad = pi / 180;
 constexpr auto gravity = 9.81;
 
 void rocket::init_rocket(){
-    this->rocket_sprite_ = tx_manager_.create_sprite("rocekt.png");
+    this->rocket_sprite_ = tx_manager_.create_sprite("assets/textures/rocekt.png");
     this->rocket_width_ = rocket_sprite_.getTextureRect().width;
     this->rocket_height_ = rocket_sprite_.getTextureRect().height;
     this->rocket_sprite_.setOrigin(rocket_width_ / 2, rocket_height_ / 2);
     this->rocket_sprite_.setPosition( 512, 648);
     this->rocket_angle = 0;
+    this->rect_ = sf::Rect<float>(110.f, 110.f, 914.f, 658.f);
 }
 void rocket::move(){
-    float x_ = sin(rocket_angle * rad) * rocketVelocity_;
-    float y_ = cos(rocket_angle * rad) * rocketVelocity_;
+    float x_ = sin(rocket_angle * rad) * -0.5;
+    float y_ = cos(rocket_angle * rad) * -0.5;
     this->rocket_sprite_.move(-x_, y_);
 	this->calculate_velocity();
     //printf("The posotion of the rocket is: %f %f\n", rocket_sprite_.getPosition().x, rocket_sprite_.getPosition().y);
@@ -35,8 +36,11 @@ void rocket::reset(){
     this->rocketVelocity_ = start_vel_;
 }
 
-bool rocket::in_bounds(){
-    return true;
+bool rocket::in_bounds() const{
+	if (rocket_sprite_.getGlobalBounds().intersects(rect_)) {
+		return true;
+	}
+    return false;
 }
 
 float rocket::calculate_x_pos(const float time) const{

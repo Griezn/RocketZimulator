@@ -13,7 +13,7 @@ public:
     void move();
     void rotate(float angle);
     void reset();
-    bool in_bounds();
+    bool in_bounds() const;
 
     //physics
     float calculate_x_pos(float time) const;
@@ -35,6 +35,7 @@ private:
     //sf::SoundBuffer buffer_;
     //sf::Sound sound_;
     sf::Sprite rocket_sprite_;
+    sf::FloatRect rect_;
     texture_manager tx_manager_;
     //private functions
     void init_rocket();

@@ -3,10 +3,13 @@
 #include <SFML/Window.hpp>
 #include "rocket.h"
 #include "background.h"
+#include "menu.h"
 
 enum class game_state {
-	PLAY,
-	EXIT,
+    menu,
+    settings,
+	play,
+	exit,
 };
 
 class environment {
@@ -14,12 +17,7 @@ public:
 	environment();
 	~environment();
 
-    void run(); 
-    void poll_event();
-    void handle_input() const;
-    void render() const;
-
-	sf::RenderWindow* window;
+    void run();
 
 private:
     //private vars
@@ -28,14 +26,23 @@ private:
 
     //objects
     sf::Event event_;
-	game_state current_gamestate_;
+    sf::RenderWindow* window_;
 
     //private functions
-    void init_systems();
+    void menu_loop();
+    void loop();
+    void poll_event();
+    void handle_input();
+    void render() const;
+
+	void init_systems();
+    void init_menu();
     void init_rocket();
     void init_background();
 
-    //rocket
+    //classes
+    game_state current_gamestate_;
+    menu* menu_;
     rocket* rocket_;
     background* background_;
 };
