@@ -2,23 +2,15 @@
 #include <SFML/Graphics.hpp>
 #include "texture_manager.h"
 
-
-class rocket {
+class rocket : public sf::Drawable, public sf::Transformable{
 public:
     rocket();
     ~rocket();
 
-    //public functions
-    void render(sf::RenderTarget& target) const;
-    void move();
-    void rotate(float angle);
     void reset();
-    bool in_bounds() const;
 
-    //physics
-    float calculate_x_pos(float time) const;
-    float calculate_y_pos(float time) const;
-    void calculate_velocity();
+    // TODO: create the launch function
+    void launch();
 
     //public vars
     double rocket_angle{ 0 };
@@ -30,13 +22,12 @@ private:
     double start_vel_{-0.1};
     double rocketVelocity_{start_vel_};
     double rocketAcceleration_{ 0.0001 };
-   
-    //private objects
-    //sf::SoundBuffer buffer_;
-    //sf::Sound sound_;
+
     sf::Sprite rocket_sprite_;
-    sf::FloatRect rect_;
+    //sf::FloatRect rect_;
     texture_manager tx_manager_;
-    //private functions
+
     void init_rocket();
+
+    virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 };

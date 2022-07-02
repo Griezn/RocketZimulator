@@ -19,7 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="background.cpp" />
     <ClCompile Include="environment.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="menu.cpp" />
@@ -27,7 +26,7 @@
     <ClCompile Include="texture_manager.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="background.h" />
+    <ClInclude Include="tilemap.h" />
     <ClInclude Include="environment.h" />
     <ClInclude Include="menu.h" />
     <ClInclude Include="rocket.h" />

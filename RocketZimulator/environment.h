@@ -2,7 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include "rocket.h"
-#include "background.h"
+#include "tilemap.h"
 #include "menu.h"
 
 enum class game_state {
@@ -20,29 +20,32 @@ public:
     void run();
 
 private:
-    //private vars
+    // private vars
     unsigned int screen_width_;
     unsigned int screen_height_;
 
-    //objects
+    // objects
+    sf::View view_;
     sf::Event event_;
     sf::RenderWindow* window_;
 
-    //private functions
+    // private functions
     void menu_loop();
     void loop();
     void poll_event();
     void handle_input();
     void render() const;
+    void center_view();
 
+    // initialization
 	void init_systems();
     void init_menu();
+    void init_tilemap();
     void init_rocket();
-    void init_background();
 
-    //classes
+    // classes
     game_state current_gamestate_;
     menu* menu_;
     rocket* rocket_;
-    background* background_;
+    TileMap tilemap_;
 };

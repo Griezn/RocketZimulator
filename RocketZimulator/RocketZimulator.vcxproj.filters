@@ -15,9 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="background.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="environment.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -35,7 +32,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="background.h">
+    <ClInclude Include="tilemap.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="environment.h">
