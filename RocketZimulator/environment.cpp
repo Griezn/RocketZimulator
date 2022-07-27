@@ -5,7 +5,7 @@ environment::environment()
 : screen_width_(1024),
   screen_height_(768),
   event_(),
-	view_(sf::FloatRect(1024, 768 *6, 1024, 768)),
+	view_(sf::FloatRect(1024, 768 *112, 1024, 768)),
   current_gamestate_(game_state::menu){
     this->init_systems();
 	this->init_menu();
@@ -37,9 +37,11 @@ void environment::menu_loop(){
 }
 
 void environment::loop(){
+	sf::Clock clock;
 	while (current_gamestate_ != game_state::exit) {
 		this->poll_event();
 		this->handle_input();
+		this->rocket_handler(clock);
 		this->render(); 
 	}
 }
@@ -56,22 +58,6 @@ void environment::init_menu(){
 	this->menu_ = new menu();
 }
 
-void environment::init_tilemap(){
-	const int level[] =
-	{
-		0, 0, 0,
-		0, 0, 0,
-		0, 0, 0,
-		0, 0, 0,
-		0, 0, 0,
-		1, 1, 1,
-		2, 2, 2
-	};
-
-	if (!tilemap_.load("assets/textures/landscape.png", sf::Vector2u(1024, 768), level, 3, 7)) {
-		std::cout << "could not load tilemap!" << std::endl;
-	}
-}
 
 void environment::poll_event(){
 	while (this->window_->pollEvent(event_)) {
@@ -91,22 +77,20 @@ void environment::poll_event(){
 void environment::handle_input(){
 	//keyboard input
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z)) {
-		//this->rocket_->move();
 		this->rocket_->move(0, -0.5);
-		this->center_view();
+		//this->center_view();
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) {
-		//this->rocket_->move();
 		this->rocket_->move(0, 0.5);
-		this->center_view();
+		//this->center_view();
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) {
 		rocket_->move(-0.5, 0);
-		this->center_view();
+		//this->center_view();
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
 		rocket_->move(0.5, 0);
-		this->center_view();
+		//this->center_view();
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Delete)) {
 		this->rocket_->reset();
@@ -121,8 +105,7 @@ void environment::handle_input(){
 		this->current_gamestate_ = game_state::menu;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space)) {
-		//launch
-		rocket_->move(0.5, 0.5);
+		this->rocket_->state = rocket_state::launch;
 	}
 
 	//mouse input
@@ -141,7 +124,6 @@ void environment::render() const{
 		this->menu_->render(*window_);
 	}
 	else if (current_gamestate_ == game_state::play) {
-		
 		window_->setView(view_);
 		window_->draw(tilemap_);
 		window_->draw(*rocket_);
@@ -149,34 +131,153 @@ void environment::render() const{
 	this->window_->display();
 }
 
-// TODO: bug rocket disappearing into a void when going down
-// TODO: add a limit for the ground
 void environment::center_view(){
-	auto rWorldPos = this->rocket_->getPosition();
-	auto screenPos = this->window_->mapCoordsToPixel(rWorldPos);
-	std::cout << screenPos.x << " " << screenPos.y << '\n';
+	auto view_center = this->view_.getCenter();
+	auto rocket_pos = rocket_->getPosition();
 
-	// check the x-bounds
-	if (screenPos.x <= 80) {
-		auto offset = 80 - screenPos.x;
-		this->view_.move(-offset, 0);
+	if (rocket_pos.y > 86400) {
+		this->view_.move(rocket_pos.x - view_center.x, 0);
 	}
-	else if (screenPos.x >= 920) {
-		auto offset = screenPos.x - 920;
-		this->view_.move(offset, 0);
+	else {
+		this->view_.move(rocket_pos.x - view_center.x, rocket_pos.y - view_center.y);
+	}
+}
+
+void environment::rocket_handler(sf::Clock &clock){
+	if (rocket_->state != rocket_state::ready) {
+		sf::Time elapsed = clock.restart();
+		this->rocket_->go_for_launch(elapsed);
+	}
+	else {
+		clock.restart();
 	}
 
-	// check the y-bounds
-	if (screenPos.y <= 85) {
-		auto offset = 85 - screenPos.y;
-		this->view_.move(0, -offset);
-	}
-	else if (screenPos.y >= 650) {
-		auto offset = screenPos.x - 650;
-		this->view_.move(0, offset);
-	}
+	this->center_view();
 }
 
 void environment::init_rocket() {
     this->rocket_ = new rocket();
+}
+
+void environment::init_tilemap() {
+	const int level[] =
+	{
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		0, 0, 0,
+		1, 1, 1,
+		2, 2, 2
+	};
+
+	if (!tilemap_.load("assets/textures/landscape.png", sf::Vector2u(1024, 768), level, 3, 113)) {
+		std::cout << "could not load tilemap!" << std::endl;
+	}
 }

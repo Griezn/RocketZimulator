@@ -36,6 +36,7 @@ private:
     void handle_input();
     void render() const;
     void center_view();
+    void rocket_handler(sf::Clock &clock);
 
     // initialization
 	void init_systems();
@@ -48,4 +49,20 @@ private:
     menu* menu_;
     rocket* rocket_;
     TileMap tilemap_;
+
+
 };
+
+// Starting view
+// (1024, 86016)
+//////////////////////////////////////////////
+//                                          //
+//                                          //
+//                                          //
+//                                          //
+//                 1536                     //
+//                                          //
+//                                          //
+//                                          //
+//                                          //
+////////////////////////////////////////////// -> 86784
